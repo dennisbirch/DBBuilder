@@ -1,0 +1,17 @@
+//
+//  DBBuilder-Demo-Mac.pch
+//  DBBuilder Demo-Mac
+//
+//  Created by Dennis Birch on 11/21/14.
+//  Copyright (c) 2014 Dennis Birch. All rights reserved.
+//
+
+#ifndef DBBuilder_Demo_Mac_DBBuilder_Demo_Mac_pch
+#define DBBuilder_Demo_Mac_DBBuilder_Demo_Mac_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <AppKit/AppKit.h>
+
+#endif
