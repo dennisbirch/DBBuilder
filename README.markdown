@@ -33,7 +33,7 @@ Whether you use the default DBManager or your own instances of this class, you n
 * ***dbClassPrefix*** — Provide the prefix for your project's DBTableRepresentation instances. For example, the demo project's classes use the prefix "DBB", so the dbClassPrefix value is set to "DBB".
 * **idColumnName** — Provide a name for the "id" column that is used in every table. DBBuilder will use this column for your DBTableRepresentation subclassess' itemID property. 
 
-You can configure all three properties individually, or with a call to the DBManager class's `-configureWithFilePath:filePath:idColumnName:` method.
+You can configure all three properties individually, or with a call to the DBManager class's `-configureWithFilePath:classPrefix:idColumnName:` method.
 
 ###Creating a database
 You create a database with DBBuilder with an instance of DBManager. It is encouraged to use its `+defaultManager` convenience method to create a singleton instance. After configuring the manager as described above, you call the manager's `-database` method to obtain a reference to an _FMDatabase_ instance. After that minimal setup you can begin initializing instances of your DBTableRepresentation subclasses to perform CRUD operations.
