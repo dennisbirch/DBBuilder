@@ -148,6 +148,14 @@ You can assign both these values, along with the file path to your SQLite file, 
  */
 + (void)queueObjectsWithOptions:(NSDictionary *)options manager:(DBManager *)manager completionBlock:(void(^)(NSArray *resultsArray, NSError *error))completion;
 
+/*!
+ Convenience method that returns the "id" column value for all records in a table
+ @param manager
+ An instance of a DBManager class, typically the defaultManager.
+ @Returns: An NSArray with the item IDs of all the records in the table represented by the DBTableRepresentation subclass this method is run on
+ */
++ (NSArray *)allIDsForTableWithManager:(DBManager *)manager;
+
 
 
 // SAVING OBJECTS

@@ -171,6 +171,24 @@ NSString *kIDSuffix = @"_id";
     }];
 }
 
++ (NSArray *)allIDsForTableWithManager:(DBManager *)manager
+{
+	DBTableRepresentation *instance = [[self alloc] initWithManager:manager];
+	NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@", manager.idColumnName, instance.tableName];
+	FMResultSet *results = [manager.database executeQuery:sql];
+	if (manager.database.lastErrorCode > 0) {
+		NSLog(@"Error executing SQL for IDs array: %@", manager.database.lastErrorMessage);
+		return nil;
+	}
+	
+	NSMutableArray *idsArray = [NSMutableArray new];
+	while ([results next]) {
+		NSDictionary *resultsDict = results.resultDictionary;
+		[idsArray addObject:resultsDict[manager.idColumnName]];
+	}
+	
+	return idsArray;
+}
 
 #pragma mark - Deleting objects
 
