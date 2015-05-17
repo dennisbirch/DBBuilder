@@ -694,7 +694,7 @@ NSString *kIDSuffix = @"_id";
 	
 	NSAssert(_manager.database != nil, @"The database should not be nil");
     
-    self.CreationDate = [NSDate date];
+    self.creationDate = [NSDate date];
     
     NSDictionary *tableColumnPropertyMap = [self tablePropertiesToColumnMap];
     
@@ -761,7 +761,7 @@ NSString *kIDSuffix = @"_id";
 	
     NSDictionary *tableColumnPropertyMap = [self tablePropertiesToColumnMap];
     
-    self.ModificationDate = [NSDate date];
+    self.modificationDate = [NSDate date];
     
     NSArray *tableColumns = tableColumnPropertyMap.allKeys;
     NSMutableArray *statementsArr = [NSMutableArray array];

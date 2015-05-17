@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		950496151A2E35C90035F2C3 /* Warnings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 950496141A2E35C90035F2C3 /* Warnings.xcconfig */; };
-		950496161A2E35C90035F2C3 /* Warnings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 950496141A2E35C90035F2C3 /* Warnings.xcconfig */; };
 		951433611A28FF2E003498B2 /* DBBEditPersonWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9514335F1A28FF2E003498B2 /* DBBEditPersonWindowController.m */; };
 		951433621A28FF2E003498B2 /* DBBEditPersonWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 951433601A28FF2E003498B2 /* DBBEditPersonWindowController.xib */; };
 		951FED7A1A2F6EB9007DDD97 /* DBBMeetingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FED781A2F6EB9007DDD97 /* DBBMeetingTests.m */; };
@@ -371,7 +369,7 @@
 		95DFD31C1A2028E600BA9760 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Dennis Birch";
 				TargetAttributes = {
 					95DFD3231A2028E600BA9760 = {
@@ -410,7 +408,6 @@
 				95DFD32F1A2028E600BA9760 /* Images.xcassets in Resources */,
 				951433621A28FF2E003498B2 /* DBBEditPersonWindowController.xib in Resources */,
 				95DFD3821A202B6600BA9760 /* DBBEditProjectWindowController.xib in Resources */,
-				950496151A2E35C90035F2C3 /* Warnings.xcconfig in Resources */,
 				95DFD3841A202B6600BA9760 /* DBBProjectListWindowController.xib in Resources */,
 				95B1BC691A2159970056CFF9 /* DBBMeetingListController.xib in Resources */,
 				954221ED1A26E77D00D8E998 /* DBBEditMeetingWindowController.xib in Resources */,
@@ -423,7 +420,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				950496161A2E35C90035F2C3 /* Warnings.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,7 +527,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -567,7 +563,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

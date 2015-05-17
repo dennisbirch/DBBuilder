@@ -12,20 +12,24 @@
 	<dict>
 		<key>6731E4ADCD1C4E62CF8B81C0895B64F6EDDB192F</key>
 		<string>ssh://pandaware.repositoryhosting.com/pandaware/dbbuilder.git</string>
+		<key>C3AFB5EA3149B8C02DFBEA558CB7BB15CF126020</key>
+		<string>https://github.com/dennisbirch/DBBuilder.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DBBuilder-Demos/DBBuilderWS.xcworkspace</string>
+	<string>DBBuilderWS.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>6731E4ADCD1C4E62CF8B81C0895B64F6EDDB192F</key>
 		<string>../..</string>
+		<key>C3AFB5EA3149B8C02DFBEA558CB7BB15CF126020</key>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://pandaware.repositoryhosting.com/pandaware/dbbuilder.git</string>
+	<string>https://github.com/dennisbirch/DBBuilder.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>6731E4ADCD1C4E62CF8B81C0895B64F6EDDB192F</string>
+	<string>C3AFB5EA3149B8C02DFBEA558CB7BB15CF126020</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -34,7 +38,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>6731E4ADCD1C4E62CF8B81C0895B64F6EDDB192F</string>
 			<key>IDESourceControlWCCName</key>
-			<string>dbbuilder</string>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C3AFB5EA3149B8C02DFBEA558CB7BB15CF126020</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DBBuilder-Demos</string>
 		</dict>
 	</array>
 </dict>
