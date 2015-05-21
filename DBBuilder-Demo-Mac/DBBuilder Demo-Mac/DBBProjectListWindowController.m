@@ -92,7 +92,7 @@
 - (void)loadProjects
 {
 	DBManager *mgr = [DBManager defaultDBManager];
-	
+    
 	// select all projects, sorted by start date
 	NSDictionary *queryOptions = @{kQuerySortingKey : @"startDate"};
 	NSArray *result = [DBBProject objectsWithOptions:queryOptions manager:mgr];

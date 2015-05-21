@@ -17,7 +17,7 @@
 	}
 	
 	NSUInteger found = [self indexOfObjectPassingTest:^BOOL(NSString *inString, NSUInteger idx, BOOL *stop) {
-		if ([inString caseInsensitiveCompare:aString] == NSOrderedSame) {
+		if ([inString isKindOfClass:[NSString class]] && [inString caseInsensitiveCompare:aString] == NSOrderedSame) {
 			*stop = YES;
 		}
 		return *stop;
@@ -71,6 +71,18 @@
     }
     
     return [newArray copy];
+}
+
+- (BOOL)db_arrayContainsArrays
+{
+    for (id subObject in self)
+    {
+        if ([subObject isKindOfClass:[NSArray class]]) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 @end

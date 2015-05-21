@@ -30,5 +30,6 @@
 - (NSArray *)db_sqlEscapedArray;
 - (NSArray *)db_leftSQLEscapedArray;
 - (NSArray *)db_rightSQLEscapedArray;
+- (BOOL)db_arrayContainsArrays;
 
 @end

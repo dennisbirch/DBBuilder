@@ -450,7 +450,7 @@ NSString *kIDSuffix = @"_id";
     NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@", columnsStr, [self tableName]];
     
     if (conditions != nil) {
-        NSString *conditionString = [self conditionsStringFromArray:[conditions db_rightSQLEscapedArray]];
+        NSString *conditionString = [self conditionsStringFromArray:conditions];
         if (conditionString.length > 0) {
             sql = [sql stringByAppendingString:[NSString stringWithFormat:@" WHERE %@ ", conditionString]];
         }
@@ -529,26 +529,85 @@ NSString *kIDSuffix = @"_id";
         return @"";
     }
     
-    if ([conditionsArray db_indexForCaseInsensitiveMatchOnString:@"and"] == NSNotFound
-        && [conditionsArray db_indexForCaseInsensitiveMatchOnString:@"or"] == NSNotFound) {
-        // default to "AND" search
-        return [conditionsArray componentsJoinedByString:@" AND "];
+    NSString *conjunction = [self conjunctionForConditionsArray:conditionsArray];
+    
+    conditionsArray = [[self strippedConditionsArray:conditionsArray] mutableCopy];
+    
+    NSMutableArray *loadedArray = [NSMutableArray new];
+    for (id item in conditionsArray)
+    {
+        // wrap strings in arrays, unless it's "AND" or "OR"
+        if ([item isKindOfClass:[NSString class]]
+            && ![[[item uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@"" ] isEqualToString:@"AND"]
+            && ![[[item uppercaseString] stringByReplacingOccurrencesOfString:@" " withString:@"" ] isEqualToString:@"OR"])
+        {
+            [loadedArray addObject:@[item]];
+        }
+        else if ([item isKindOfClass:[NSArray class]])
+        {
+            [loadedArray addObject:item];
+        }
     }
+    
+    return [self appendConditionsStringFromObject:loadedArray withConjunction:conjunction];
+}
+
+- (NSString *)appendConditionsStringFromObject:(id)object withConjunction:(NSString *)conjunction
+{
+    NSMutableArray *output = [NSMutableArray new];
+    
+    if (![object db_arrayContainsArrays])
+    {
+        object = [self strippedConditionsArray:[object db_rightSQLEscapedArray]];
+        
+        NSLog(@"Conjunction: %@ -- Output: %@",conjunction, [object componentsJoinedByString:[NSString stringWithFormat:@" %@ ", conjunction]]);
+        
+        NSString *conditionString = [object componentsJoinedByString:[NSString stringWithFormat:@" %@ ", conjunction]];
+        [output addObject:conditionString];
+    }
+    
+    else
+    {
+        for (id subObject in object) {
+            NSString *subConjunction = [self conjunctionForConditionsArray:object];
+
+            NSArray *strippedArray = [self strippedConditionsArray:subObject];
+
+            [output addObject:[self appendConditionsStringFromObject:strippedArray withConjunction:subConjunction]];
+        }
+    }
+    
+    return [NSString stringWithFormat:@"(%@)", [output componentsJoinedByString:conjunction]];
+}
+
+- (NSString *)conjunctionForConditionsArray:(NSArray *)conditionsArray
+{
+    // default to "AND"
+    NSString *conjunction = @" AND ";
+    // or set to "OR" if found
+    NSUInteger orFind = [conditionsArray db_indexForCaseInsensitiveMatchOnString:@"or"];
+    if (orFind != NSNotFound) {
+        conjunction = @" OR ";
+    }
+    
+    return conjunction;
+}
+
+- (NSArray *)strippedConditionsArray:(NSArray *)conditionsArray
+{
+    NSUInteger orFind = [conditionsArray db_indexForCaseInsensitiveMatchOnString:@"or"];
+    NSUInteger andFind = [conditionsArray db_indexForCaseInsensitiveMatchOnString:@"and"];
     
     NSMutableArray *temp = [conditionsArray mutableCopy];
-    NSString *conjunction = nil;
-    NSUInteger found = [temp db_indexForCaseInsensitiveMatchOnString:@"and"];
-    if (found != NSNotFound) {
-        conjunction = @" AND ";
-        [temp removeObjectAtIndex:found];
+    // strip off conjunction elements
+    if (andFind != NSNotFound) {
+        [temp removeObjectAtIndex:andFind];
     }
-    found = [temp db_indexForCaseInsensitiveMatchOnString:@"or"];
-    if (found != NSNotFound) {
-        conjunction = @" OR ";
-        [temp removeObjectAtIndex:found];
+    if (orFind != NSNotFound) {
+        [temp removeObjectAtIndex:orFind];
     }
     
-    return [temp componentsJoinedByString:conjunction];
+    return [temp copy];
 }
 
 - (void)loadPropertyValuesForResultSet:(FMResultSet *)rs
