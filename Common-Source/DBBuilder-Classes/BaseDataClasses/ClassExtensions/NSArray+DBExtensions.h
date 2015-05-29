@@ -25,11 +25,17 @@
 #import <Foundation/Foundation.h>
 
 @interface NSArray (DBExtensions)
-
+// asks the array for the index of a string with a case-insensitive match
 - (NSUInteger)db_indexForCaseInsensitiveMatchOnString:(NSString *)aString;
+// turn an array of strings into SQL-escaped strings
 - (NSArray *)db_sqlEscapedArray;
+// turn an array of strings into an array of "left-SQLified" strings —
+// anything to the left of an "=" sign in each array member is SQL-escaped
 - (NSArray *)db_leftSQLEscapedArray;
+// turn an array of strings into an array of "right-SQLified" strings —
+// anything to the right of an "=" sign in each array member is SQL-escaped
 - (NSArray *)db_rightSQLEscapedArray;
+// asks the receiving NSArray if any of its members are NSArrays
 - (BOOL)db_arrayContainsArrays;
 
 @end

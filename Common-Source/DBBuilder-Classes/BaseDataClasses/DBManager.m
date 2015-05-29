@@ -20,8 +20,6 @@
 
 @implementation DBManager
 
-
-
 #pragma mark - Singleton Support
 
 static DBManager *sharedManager = nil;
@@ -71,6 +69,15 @@ static DBManager *sharedManager = nil;
     return result;
 }
 
+
+- (void)reset
+{
+    _database = nil;
+    _allTablesPropertiesCache = [NSDictionary new];
+    _preparedClasses = [NSArray new];
+    _joinTableMap = [NSDictionary new];
+    _hasVerifiedTables = NO;
+}
 
 - (NSUInteger)countForTable:(NSString *)tableName
 {

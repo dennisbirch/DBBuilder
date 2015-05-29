@@ -522,6 +522,8 @@ NSString *kIDSuffix = @"_id";
 
 - (NSString *)conditionsStringFromArray:(NSArray *)conditionsArray
 {
+    NSParameterAssert([conditionsArray isKindOfClass:[NSArray class]]);
+    
     // create a string for the WHERE clause that comprises all condition string passed in array,
     // with "AND" or "OR" conjunction if passed in, otherwise default to "AND"
     
@@ -552,32 +554,35 @@ NSString *kIDSuffix = @"_id";
     return [self appendConditionsStringFromObject:loadedArray withConjunction:conjunction];
 }
 
-- (NSString *)appendConditionsStringFromObject:(id)object withConjunction:(NSString *)conjunction
+- (NSString *)appendConditionsStringFromObject:(NSArray *)conditionsArray withConjunction:(NSString *)conjunction
 {
-    NSMutableArray *output = [NSMutableArray new];
+    // build an array of strings to output as a string joined by the conjunction parameter
+    NSMutableArray *outputArray = [NSMutableArray new];
     
-    if (![object db_arrayContainsArrays])
+    if (![conditionsArray db_arrayContainsArrays])
     {
-        object = [self strippedConditionsArray:[object db_rightSQLEscapedArray]];
-        
-        NSLog(@"Conjunction: %@ -- Output: %@",conjunction, [object componentsJoinedByString:[NSString stringWithFormat:@" %@ ", conjunction]]);
-        
-        NSString *conditionString = [object componentsJoinedByString:[NSString stringWithFormat:@" %@ ", conjunction]];
-        [output addObject:conditionString];
+        // if none of the conditionsArray's elements are arrays, we can work directly on the conditionsArray
+        // so strip out any conjunctions it contains
+        conditionsArray = [self strippedConditionsArray:[conditionsArray db_rightSQLEscapedArray]];
+        // join its components by the conjunction
+        NSString *conditionString = [conditionsArray componentsJoinedByString:[NSString stringWithFormat:@" %@ ", conjunction]];
+        // and add it to the output array
+        [outputArray addObject:conditionString];
     }
-    
+    // otherwise, we need to turn any arrays into strings by calling this method recursively
     else
     {
-        for (id subObject in object) {
-            NSString *subConjunction = [self conjunctionForConditionsArray:object];
-
+        for (id subObject in conditionsArray) {
+            // first pull out the array's conjunction
+            NSString *subConjunction = [self conjunctionForConditionsArray:conditionsArray];
+            // and get a new array that's stripped of that conjunction
             NSArray *strippedArray = [self strippedConditionsArray:subObject];
-
-            [output addObject:[self appendConditionsStringFromObject:strippedArray withConjunction:subConjunction]];
+            // and now we can run that stripped array through this method again
+            [outputArray addObject:[self appendConditionsStringFromObject:strippedArray withConjunction:subConjunction]];
         }
     }
     
-    return [NSString stringWithFormat:@"(%@)", [output componentsJoinedByString:conjunction]];
+    return [NSString stringWithFormat:@"(%@)", [outputArray componentsJoinedByString:conjunction]];
 }
 
 - (NSString *)conjunctionForConditionsArray:(NSArray *)conditionsArray
@@ -1090,7 +1095,7 @@ NSString *kIDSuffix = @"_id";
         return nil;
     }
     
-    NSString *createString = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@_%@ (id Integer PRIMARY KEY AUTOINCREMENT, CreationDate DateTimeStamp, ModificationDate DateTimeStamp, %@ Integer, %@ Integer)", map[kTableNameKey], map[kPropertyNameKey],map[kTableIDKey], map[kJoinIDKey]];
+    NSString *createString = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@_%@ (id Integer PRIMARY KEY AUTOINCREMENT, creationDate DateTimeStamp, modificationDate DateTimeStamp, %@ Integer, %@ Integer)", map[kTableNameKey], map[kPropertyNameKey],map[kTableIDKey], map[kJoinIDKey]];
     
     return createString;
 }
@@ -1592,7 +1597,7 @@ NSString *kIDSuffix = @"_id";
 		}
 	}
 	
-	NSString *createString = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (id Integer PRIMARY KEY AUTOINCREMENT, CreationDate DateTimeStamp, ModificationDate DateTimeStamp,", self.tableName];
+	NSString *createString = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (id Integer PRIMARY KEY AUTOINCREMENT, creationDate DateTimeStamp, modificationDate DateTimeStamp,", self.tableName];
 	createString = [createString stringByAppendingString:[qArray componentsJoinedByString:@", "]];
 	createString = [createString stringByAppendingString:@")"];
 	

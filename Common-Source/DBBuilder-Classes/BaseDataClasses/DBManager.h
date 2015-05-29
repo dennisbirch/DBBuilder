@@ -104,6 +104,11 @@
  */
 - (FMResultSet *)recordForTable:(NSString *)tableName row:(NSInteger)row;
 
+/*!
+	Method to reset a DBManager's values so that it can be reused for another file.
+ */
+- (void)reset;
+
 // internal methods (required by DBTableRepresentation class, using these in your own code will probably just lead to misery)
 
 - (void)setProperties:(NSDictionary *)propertiesDict forClass:(Class)class;

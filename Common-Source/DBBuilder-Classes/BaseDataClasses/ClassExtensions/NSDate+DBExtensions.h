@@ -27,9 +27,16 @@
 
 @interface NSDate (DBExtensions)
 
+// returns a string with the receiving date's value expressed in SQL datestamp format
 - (NSString *)db_sqlDateString;
+// returns a string with the receiving date's value expressed in "short" date format (without the time)
 - (NSString *)db_displayDate;
+// returns a string with the receiving date's value expressed in "short" date and time format
 - (NSString *)db_displayDateTime;
+// returns a date with the receiving date's hours, minutes and seconds set to 0, representing its time at midnight
 - (NSDate *)db_midnightDate;
+
+// returns a string that can be used for queries with "date = xxx" conditions
+- (NSString *)db_queryStringForDateMatchOnColumn:(NSString *)columnName;
 
 @end

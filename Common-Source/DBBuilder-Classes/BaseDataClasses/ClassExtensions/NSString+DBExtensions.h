@@ -26,19 +26,33 @@
 
 @interface NSString (DBExtensions)
 
+// returns a date that corresponds to a SQL-formatted timestamp string
 - (NSDate *)db_dateForSQLDateString;
+// returns a date that corresponds to a short-date formatted string
+- (NSDate *)db_dateForShortDateString;
 
+// returns a SQL-formatted timestamp for a date string in "short" format
+- (NSString *)db_sqlDateStringForShortDate;
+// returns a SQL-formatted date (no time component) for a date string in "short" format
+- (NSString *)db_sqlDateStringForShortDateWithoutTime;
+
+// returns a SQL-escaped string for the receiver
 - (NSString *)db_sqlify;
 
+// returns a string with everything to the left of a "=" sign SQL-escaped
 - (NSString *)db_leftEscapedString;
-
+// returns a string with everything to the right of a "=" sign SQL-escaped
 - (NSString *)db_rightEscapedString;
 
-+ (NSDateFormatter *)db_sqlDateFormatter;
-
 // SQL SUBSTRING SEARCH HELPERS
+// You can use these helpers to create Condition clauses for string matching queries
+// e.g. [NSString db_EndsWithSearchTerm:@"book" forColumn:@"merchandise" returns:
+// "merchandise LIKE %hello", which if included in a condition clause, would match on any
+// entries in the merchandise column that end in "hello"
 + (NSString *)db_EndsWithSearchTerm:(NSString *)searchTerm forColumn:(NSString *)column;
+// returns a condition clause that matches entries in column that start with searchTerm
 + (NSString *)db_StartsWithSearchTerm:(NSString *)searchTerm forColumn:(NSString *)column;
+// returns a condition clause that matches entries in column that contain searchTerm
 + (NSString *)db_ContainsSearchTerm:(NSString *)searchTerm forColumn:(NSString *)column;
 
 @end

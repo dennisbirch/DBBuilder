@@ -35,6 +35,8 @@ Whether you use the default DBManager or your own instances of this class, you n
 
 You can configure all three properties individually, or with a call to the DBManager class's `-configureWithFilePath:classPrefix:idColumnName:` method.
 
+You can return a DBManager instance to its non-configured state using the `reset` method. This can be useful for instances where you want to change the file backing the default manager. After using the reset method you would need to reinitialize the DBManager as described above.
+
 ###Creating a database
 You create a database with DBBuilder with an instance of DBManager. It is encouraged to use its `+defaultManager` convenience method to create a singleton instance. After configuring the manager as described above, you call the manager's `-database` method to obtain a reference to an _FMDatabase_ instance. After that minimal setup you can begin initializing instances of your DBTableRepresentation subclasses to perform CRUD operations.
 
@@ -45,7 +47,7 @@ DBBuilder supports storing string, numeric, boolean, and date properties. You ca
 As stated above, you work with DBBuilder by creating subclasses of the DBTableRepresentation class, which in turn writes to the SQL file or in-memory store to represent your class as a set of tables with appropriate columns. Each class gets its own table, and join tables are created to store the contents of arrays.
 
 ####Columns = Properties
-It is required to create a property for each database column you want to store in the database. You can create properties that you do not wish to be persisted by setting an attribute in a class method provided for that purpose. You can set other attributes to influence database behavior.
+It is required to create a property for each database column you want to store in the database table representing a DBTableRepresentation subclass. You can create properties that you do not wish to be persisted by setting an attribute in a class method provided for that purpose. You can set other attributes to influence database behavior.
 
 ####Setting Attributes
 Each column that you want to create storage for must be represented in a subclass as a property. If you want to create a property in a DBTableRepresentation subclass that you do not want to be stored in the database, override the `+tableAttributes` method for that class and return a dictionary that includes the property name as the key and the _kDoNotPersist_ constant as the value. If you want to require a value in the database for a property, use the _kNotNull_ constant. If you want to require unique values for column entries, use the _kUnique_ constant as a value. You can combine attributes for a property by setting them as elements of an array you use for the value (e.g. `@{@"myProperty" : @[kNotNull, kUnique]}`).
@@ -65,8 +67,23 @@ There is also a convenience method for creating and saving an instance: `+savedI
 ###Accessing sets of data
 DBBuilder offers two convenience methods for accessing data in the form of arrays of DBTableRepresentation subclasses:
 
-* `+objectsWithOptions:manager` - Takes a dictionary of options that let you define columns to include, conditional clauses, sort order, grouping order, and whether or not to return only distinct values. As with the single instance initializers, it also takes a DBManager instance.
+* `+objectsWithOptions:manager` - Takes a dictionary of options that let you define columns to include, conditional clauses, sort order, grouping order, and whether or not to return only distinct values. As with the single instance initializers, it also takes a DBManager instance. Options are discussed in the _Defining the scope and order of data returned_ section below.
 * `+queueObjectsWithOptions:manager:completionBlock` - works the same as the objectsWithOptions:manager method, but uses an *FMDatabaseQueue* to perform its action on a background queue.
+
+DBTableRepresentation also offers a convenience method for obtaining the ID field value for every record in a database table. Calling the `+allIDsForTableWithManager:manager` method on a DBTableRepresentation returns an NSArray of NSNumbers, whose Integer values represent the records' ID values.
+
+###Defining the scope and order of data returned
+When you use the `+objectsWithOptions:manager` or `+queueObjectsWithOptions:manager:completionBlock` method to access data in the database, one of the parameters for both methods is an _options_ dictionary that lets you affect what and how objects are returned.
+
+The options dictionary is optional (you can pass in nil), which results in the full set of data in the database table being returned in a non-defined order.
+
+DBBuilder understands the following options:
+
+* **Which records to return** - You can include a key-value pair in the _options_ dictionary whose key is _kQueryConditionsKey_ to determine which records should be returned. The value must be an NSArray composed of SQL condition matching statements and, optionally, either AND or OR to indicate that all conditions or any conditions must be met. For example, you could pass in an array whose elements are _id > 50,name LIKE %john%, AND, to match all records with an ID greater than 50 and containing the string "john". For string matching, **do not enclose the string to match on in tick marks**. The elements of this NSArray dictionary value can be NSArrays with the same structure, allowing you to mix AND and OR matching in a single query. If you omit AND and OR at any level of an array, DBBuilder defaults to AND. There are a number of helper methods for building conditional clauses in the various Category files included in the  *ClassExtensions* group.
+* **Which properties to populate** - You can include a key-value pair in the _options_ dictionary whose key is _kQueryColumnsKey_ to determine which properties should be populated in the records returned. The value should be a comma-delimited list of the table column names for which you want values loaded.
+* **How to sort returned values** - You can include a key-value pair in the _options_ dictionary whose key is _kQuerySortingKey_ to determine the order in which records should be returned. The value for this key should be either an NSString with a single column name, or an NSArray with one or more column names to sort by, and an optional "ASC" or "DESC" to determine ascending or descending order. If the ASC/DESC item is omitted, DBBuilder uses the SQLite default value, ascending.
+* **How to group returned values** - You can include a key-value pair in the _options_ dictionary whose key is _kQueryGroupingKey_ to affect how records should be grouped. The value for this key should be either an NSString with a single column name to group by, or an NSArray of string elements, each representing a column name to group by.
+* **How to return only distinct values** - You can include a key-value pair in the _options_ dictionary whose key is _kQueryDistinctKey_ to dictate returning only distinct records (the same as using the DISTINCT keyword in a SQL SELECT statement). The value for this key should be either YES wrapped in an NSNumber, or NO wrapped in an NSNumber (which has the same effect as omitting this key-value pair).
 
 ###Saving/Updating instances
 Saving a DBTableRepresentation subclass instance is as simple as calling the `-saveToDB` method. It returns a boolean value indicating whether or not it was successful. Alternatively, you can use the `-queueSaveToDBWithCompletionBlock` method to use a FMDatabaseQueue instance for saving on a separate serial queue. These methods both save new instances and update existing instances you've changed.
@@ -93,9 +110,9 @@ As mentioned above, DBBuilder builds and maintains database tables from the DBTa
 *  `+ (NSDictionary *)overriddenColumnNames` - Lets you specify names for table columns used for DBTableRepresentation subclass properties. You can use this method to adapt to existing table columns that store a foreign key ID to another object's table. DBBuilder automatically creates column names for such properties formatted as <property-name>_id. If that won't work with an existing database table you need to access, return an NSDictionary with the property name as key and the column name to use as the value. Be sure to match capitalization as case-sensitive comparisons are used.
 
 ##Demo Projects
-The DBBuilder archive includes both iOS and Mac demo projects. They exercise a range of functionality. They demonstrate implementing a simple database application, and includes a number of unit tests that may help guide you in using DBBuilder in your own projects.
+The DBBuilder archive includes both iOS and Mac demo projects. They exercise a range of functionality. They demonstrate implementing a simple database application, and includes a number of unit tests that may help guide you in using DBBuilder in your own projects. They are not meant to be examples of good UI.
 
-You can run the iOS demo project with the iOS 7 or later simulator. The Mac demo project has been set to use OS X as its deployment target, but may work with earlier versions of OS X.
+You can run the iOS demo project with the iOS 7 or later simulator. The Mac demo project has been set to use OS X 10.9 as its deployment target, but may work with earlier versions of OS X.
 
 ##Using DBBBuilder in your own Projects
 To use DBBuilder in your own Cocoa projects, you need to copy the source files within the "DBBuilder-Classes" folder into your project. You will also need to add FMDB to your project as mentioned above.
