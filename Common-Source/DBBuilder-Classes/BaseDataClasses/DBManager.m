@@ -20,6 +20,8 @@
 
 @implementation DBManager
 
+
+
 #pragma mark - Singleton Support
 
 static DBManager *sharedManager = nil;
@@ -33,6 +35,8 @@ static DBManager *sharedManager = nil;
 	
 	return sharedManager;
 }
+
+#pragma mark - Non-default Manager
 
 + (DBManager *)managerWithFilePath:(NSString *)dbFilePath
 {
@@ -52,6 +56,8 @@ static DBManager *sharedManager = nil;
     self.idColumnName = idColumnName;
 }
 
+#pragma mark - Queries
+
 - (FMResultSet *)runQuery:(NSString *)query
 {
     if (self.database == nil  || [query isEqualToString:@""]) {
@@ -67,16 +73,6 @@ static DBManager *sharedManager = nil;
     // set up result set ready for first read
     [result next];
     return result;
-}
-
-
-- (void)reset
-{
-    _database = nil;
-    _allTablesPropertiesCache = [NSDictionary new];
-    _preparedClasses = [NSArray new];
-    _joinTableMap = [NSDictionary new];
-    _hasVerifiedTables = NO;
 }
 
 - (NSUInteger)countForTable:(NSString *)tableName
@@ -112,12 +108,7 @@ static DBManager *sharedManager = nil;
     return result;
 }
 
-
-
-
-// ********************************************
-// Internally used methods
-// ********************************************
+#pragma mark - Setup/Reset
 
 - (void)setFilePath:(NSString *)filePath
 {
@@ -137,23 +128,32 @@ static DBManager *sharedManager = nil;
 	}
 }
 
-#pragma mark - database Access
-
-- (FMDatabase *)database
+- (void)reset
 {
-    if (self.allTablesPropertiesCache == nil) {
-        self.allTablesPropertiesCache = [NSDictionary new];
-    }
-	
-	return _database;
+    _database = nil;
+    _allTablesPropertiesCache = [NSDictionary new];
+    _preparedClasses = [NSArray new];
+    _joinTableMap = [NSDictionary new];
+    _hasVerifiedTables = NO;
 }
+
+#pragma mark - Internal Use
 
 /**********************************************
 
  METHODS BELOW THIS POINT ARE USED BY DBBUILDER CLASSES, AND SHOULD NOT BE USED FOR OTHER PURPOSES
  
 ***********************************************/
-#pragma mark - Internal Use
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _allTablesPropertiesCache = [NSDictionary new];
+    }
+    
+    return self;
+}
 
 - (void)dealloc
 {

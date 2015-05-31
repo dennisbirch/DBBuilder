@@ -51,7 +51,7 @@ NSString *kIDSuffix = @"_id";
 		
 		[self cacheDBProperties];
 
-		if ([self tableName] == nil || [[self tableName] isEqualToString:@""]) {
+        if ([self tableName] == nil || [[self tableName] isEqualToString:@""]) {
 			return nil;
 		}
 
@@ -85,6 +85,10 @@ NSString *kIDSuffix = @"_id";
 	
 	[self cacheDBProperties];
 
+    if ([self tableName] == nil || [[self tableName] isEqualToString:@""]) {
+        return nil;
+    }
+    
 	return  self;
 }
 
@@ -95,6 +99,10 @@ NSString *kIDSuffix = @"_id";
 		_manager = manager;
 		[self cacheDBProperties];
 		
+        if ([self tableName] == nil || [[self tableName] isEqualToString:@""]) {
+            return nil;
+        }
+        
 		NSString *key = manager.idColumnName;
 		if ([[dict allKeys]containsObject:key]) {
 			_itemID = [dict[key] integerValue];
