@@ -12,7 +12,7 @@
 #import "DBBProject.h"
 #import "DBBPerson.h"
 #import "NSString+DBExtensions.h"
-#import <objc/objc-runtime.h>
+#import <objc/runtime.h>
 
 
 @interface DBBMeetingListViewController () <UITableViewDataSource, UITableViewDelegate, EditMeetingDelegate>

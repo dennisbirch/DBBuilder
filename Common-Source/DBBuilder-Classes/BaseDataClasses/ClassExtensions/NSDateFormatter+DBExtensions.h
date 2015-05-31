@@ -12,7 +12,7 @@
 
 // returns a date formatter for SQL timestamp conversions
 + (NSDateFormatter *)db_sqlDateFormatter;
-// retunrs a date formatter for SQL date-only conversions
+// returns a date formatter for SQL date-only conversions
 + (NSDateFormatter *)db_sqlDateFormatterWithoutTime;
 // returns a date formatter for short date-only conversions
 + (NSDateFormatter *)db_shortDateOnlyFormatter;

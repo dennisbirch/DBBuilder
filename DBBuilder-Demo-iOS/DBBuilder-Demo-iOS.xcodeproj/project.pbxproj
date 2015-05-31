@@ -15,6 +15,7 @@
 		95006986180E139000C4BCB2 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9500696A180E139000C4BCB2 /* DBManager.m */; };
 		95006988180E139000C4BCB2 /* DBTableRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9500696C180E139000C4BCB2 /* DBTableRepresentation.m */; };
 		9500698A180E139000C4BCB2 /* ObjCClassUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9500696E180E139000C4BCB2 /* ObjCClassUtil.m */; };
+		9504C4C91B1B721600227966 /* NSDateFormatter+DBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9504C4C81B1B721600227966 /* NSDateFormatter+DBExtensions.m */; };
 		951FD2F41A10E28D0028DFFD /* DBBProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FD2F31A10E28D0028DFFD /* DBBProjectListViewController.m */; };
 		951FD2F71A10E7E00028DFFD /* DBBEditProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FD2F61A10E7E00028DFFD /* DBBEditProjectViewController.m */; };
 		951FD2FA1A11496D0028DFFD /* DBBDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FD2F91A11496D0028DFFD /* DBBDatePickerView.m */; };
@@ -60,6 +61,8 @@
 		9500696E180E139000C4BCB2 /* ObjCClassUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCClassUtil.m; sourceTree = "<group>"; };
 		9500696F180E139000C4BCB2 /* DBMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBMacros.h; sourceTree = "<group>"; };
 		950496171A2E37DC0035F2C3 /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Warnings.xcconfig; path = "../Common-Source/Warnings.xcconfig"; sourceTree = "<group>"; };
+		9504C4C71B1B721600227966 /* NSDateFormatter+DBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+DBExtensions.h"; sourceTree = "<group>"; };
+		9504C4C81B1B721600227966 /* NSDateFormatter+DBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DBExtensions.m"; sourceTree = "<group>"; };
 		951FD2F21A10E28D0028DFFD /* DBBProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBBProjectListViewController.h; path = ViewControllers/DBBProjectListViewController.h; sourceTree = "<group>"; };
 		951FD2F31A10E28D0028DFFD /* DBBProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBBProjectListViewController.m; path = ViewControllers/DBBProjectListViewController.m; sourceTree = "<group>"; };
 		951FD2F51A10E7E00028DFFD /* DBBEditProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBBEditProjectViewController.h; path = ViewControllers/DBBEditProjectViewController.h; sourceTree = "<group>"; };
@@ -157,6 +160,8 @@
 				95006961180E138F00C4BCB2 /* NSArray+DBExtensions.m */,
 				95006962180E138F00C4BCB2 /* NSDate+DBExtensions.h */,
 				95006963180E138F00C4BCB2 /* NSDate+DBExtensions.m */,
+				9504C4C71B1B721600227966 /* NSDateFormatter+DBExtensions.h */,
+				9504C4C81B1B721600227966 /* NSDateFormatter+DBExtensions.m */,
 				95006964180E138F00C4BCB2 /* NSDictionary+SafeAccessors.h */,
 				95006965180E139000C4BCB2 /* NSDictionary+SafeAccessors.m */,
 				95006966180E139000C4BCB2 /* NSString+DBExtensions.h */,
@@ -358,6 +363,7 @@
 				A506AE521A129937002E7186 /* FMDatabase.m in Sources */,
 				95DC680E17E16F27007C5E99 /* DBBMeetingListViewController.m in Sources */,
 				95006980180E139000C4BCB2 /* NSDate+DBExtensions.m in Sources */,
+				9504C4C91B1B721600227966 /* NSDateFormatter+DBExtensions.m in Sources */,
 				95006988180E139000C4BCB2 /* DBTableRepresentation.m in Sources */,
 				A506AE531A129937002E7186 /* FMDatabaseAdditions.m in Sources */,
 				95006982180E139000C4BCB2 /* NSDictionary+SafeAccessors.m in Sources */,

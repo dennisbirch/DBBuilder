@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9504C4CC1B1B722900227966 /* NSDateFormatter+DBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9504C4CB1B1B722900227966 /* NSDateFormatter+DBExtensions.m */; };
 		951433611A28FF2E003498B2 /* DBBEditPersonWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9514335F1A28FF2E003498B2 /* DBBEditPersonWindowController.m */; };
 		951433621A28FF2E003498B2 /* DBBEditPersonWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 951433601A28FF2E003498B2 /* DBBEditPersonWindowController.xib */; };
 		951FED7A1A2F6EB9007DDD97 /* DBBMeetingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FED781A2F6EB9007DDD97 /* DBBMeetingTests.m */; };
@@ -58,6 +59,8 @@
 
 /* Begin PBXFileReference section */
 		950496141A2E35C90035F2C3 /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Warnings.xcconfig; path = "../Common-Source/Warnings.xcconfig"; sourceTree = "<group>"; };
+		9504C4CA1B1B722900227966 /* NSDateFormatter+DBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+DBExtensions.h"; sourceTree = "<group>"; };
+		9504C4CB1B1B722900227966 /* NSDateFormatter+DBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DBExtensions.m"; sourceTree = "<group>"; };
 		9514335E1A28FF2E003498B2 /* DBBEditPersonWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBEditPersonWindowController.h; sourceTree = "<group>"; };
 		9514335F1A28FF2E003498B2 /* DBBEditPersonWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBBEditPersonWindowController.m; sourceTree = "<group>"; };
 		951433601A28FF2E003498B2 /* DBBEditPersonWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DBBEditPersonWindowController.xib; sourceTree = "<group>"; };
@@ -278,6 +281,8 @@
 				95DFD3641A202AD800BA9760 /* NSArray+DBExtensions.m */,
 				95DFD3651A202AD800BA9760 /* NSDate+DBExtensions.h */,
 				95DFD3661A202AD800BA9760 /* NSDate+DBExtensions.m */,
+				9504C4CA1B1B722900227966 /* NSDateFormatter+DBExtensions.h */,
+				9504C4CB1B1B722900227966 /* NSDateFormatter+DBExtensions.m */,
 				95DFD3671A202AD800BA9760 /* NSDictionary+SafeAccessors.h */,
 				95DFD3681A202AD800BA9760 /* NSDictionary+SafeAccessors.m */,
 				95DFD3691A202AD800BA9760 /* NSString+DBExtensions.h */,
@@ -452,6 +457,7 @@
 				951433611A28FF2E003498B2 /* DBBEditPersonWindowController.m in Sources */,
 				95DFD3741A202AD800BA9760 /* NSArray+DBExtensions.m in Sources */,
 				95DFD38C1A202B9300BA9760 /* DBBMeeting.m in Sources */,
+				9504C4CC1B1B722900227966 /* NSDateFormatter+DBExtensions.m in Sources */,
 				95DFD38E1A202B9300BA9760 /* DBBProject.m in Sources */,
 				95DFD3781A202AD800BA9760 /* DBManager.m in Sources */,
 			);
