@@ -1334,10 +1334,12 @@ NSString *kIDSuffix = @"_id";
 - (void)cacheDBProperties
 {
 	NSAssert(_manager.filePath != nil, @"The DBManager instance file path has not been set.");
-    NSString *className = NSStringFromClass([self class]);
     NSAssert(_manager.classPrefix.length > 0, @"The classPrefix property has not been defined");
+#if DEBUG
+    NSString *className = NSStringFromClass([self class]);
     NSAssert([[className substringToIndex:_manager.classPrefix.length] isEqualToString:_manager.classPrefix],
              @"The prefix for the %@ class does not match '%@' defined with the classPrefix property value", className, _manager.classPrefix);
+#endif
 	NSAssert(_manager.database != nil, @"database should not be nil in %s", __PRETTY_FUNCTION__);
 	
     if ([_manager classIsPrepared:[self class]]) {
