@@ -455,8 +455,10 @@ NSString *kIDSuffix = @"_id";
         columnsStr = [columnNames componentsJoinedByString:@","];
     }
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@", columnsStr, [self tableName]];
+    NSString *distinct = (isDistinct) ? @"DISTINCT " : @"";
     
+    NSString *sql = [NSString stringWithFormat:@"SELECT %@%@ FROM %@", distinct, columnsStr, [self tableName]];
+        
     if (conditions != nil) {
         NSString *conditionString = [self conditionsStringFromArray:conditions];
         if (conditionString.length > 0) {
