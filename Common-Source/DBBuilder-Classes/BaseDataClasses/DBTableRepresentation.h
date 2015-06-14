@@ -262,7 +262,10 @@ You can assign both these values, along with the file path to your SQLite file, 
  */
 - (void)makeClean;
 
-
+/*!
+ Access to the various meta data dictionaries that describe properties, attributes, database table columns, etc.
+*/
+- (NSDictionary *)propertiesCache;
 
 // methods used by DBBuilder internals
 - (BOOL)verifyTableWithRetry:(BOOL)retry;

@@ -458,7 +458,7 @@ NSString *kIDSuffix = @"_id";
     NSString *distinct = (isDistinct) ? @"DISTINCT " : @"";
     
     NSString *sql = [NSString stringWithFormat:@"SELECT %@%@ FROM %@", distinct, columnsStr, [self tableName]];
-        
+    
     if (conditions != nil) {
         NSString *conditionString = [self conditionsStringFromArray:conditions];
         if (conditionString.length > 0) {
@@ -1172,38 +1172,38 @@ NSString *kIDSuffix = @"_id";
 
 - (NSDictionary *)propertiesCache
 {
-	NSDictionary *metaData = _manager.allTablesPropertiesCache;
-	NSString *className = NSStringFromClass([self class]);
-	return metaData[className];
+    NSDictionary *metaData = _manager.allTablesPropertiesCache;
+    NSString *className = NSStringFromClass([self class]);
+    return metaData[className];
 }
 
 - (NSDictionary *)metaDataClassProperties
 {
-	NSDictionary *cache = [self propertiesCache];
+	NSDictionary *cache = self.propertiesCache;
 	return cache[kClassPropertiesDictKey];
 }
 
 - (NSDictionary *)metaDataTableAttributes
 {
-	NSDictionary *cache = [self propertiesCache];
+	NSDictionary *cache = self.propertiesCache;
 	return cache[kClassAttributesKey];
 }
 
 - (NSDictionary *)tableColumnsArray
 {
-	NSDictionary *cache = [self propertiesCache];
+	NSDictionary *cache = self.propertiesCache;
 	return cache[kColumnRemapDictKey];
 }
 
 - (NSDictionary *)tablePropertiesToColumnMap
 {
-	NSDictionary *cache = [self propertiesCache];
+	NSDictionary *cache = self.propertiesCache;
 	return cache[kTablePropertyToColumnMap];
 }
 
 - (NSDictionary *)tableColumnsToPropertyMap
 {
-    NSDictionary *cache = [self propertiesCache];
+    NSDictionary *cache = self.propertiesCache;
     return cache[kTableColumnToPropertyMap];
 }
 
@@ -1238,6 +1238,7 @@ NSString *kIDSuffix = @"_id";
 		}
 		// add attribute to prevent persisting the isDirty flag
 		temp[@"isDirty"] = @[kDoNotPersistAttributeKey];
+        temp[@"propertiesCache"] = @[kDoNotPersistAttributeKey];
 		[_manager setAttributes:[temp copy] forClass:[self class]];
 	}
 	
@@ -1432,19 +1433,18 @@ NSString *kIDSuffix = @"_id";
 	NSMutableDictionary *newColumnsDict = [NSMutableDictionary new];
     NSArray *propertiesArray = [[self metaDataClassProperties] allKeys];
     NSDictionary *attributes = [self metaDataTableAttributes];
+    NSDictionary *tablePropertiesColumnMap = [self tablePropertiesToColumnMap];
     for (NSString *item in propertiesArray) {
-		NSString *className = [self metaDataClassProperties][item];
-		Class class = NSClassFromString(className);
-        if ([class isSubclassOfClass:[DBTableRepresentation class]] || // do string comparison for unit tests...
-            [NSStringFromClass([NSClassFromString(className) superclass]) isEqualToString:NSStringFromClass([DBTableRepresentation class])]) {
-            NSString *propName = [self tablePropertiesToColumnMap][item];
+        if ([attributes[item] containsObject:kDoNotPersistAttributeKey]) {
+            continue;
+        }
+            NSString *propName = tablePropertiesColumnMap[item];
 			NSAssert(propName != nil, @"Property name must not be nil");
 			if (![_manager.database columnExists:propName inTableWithName:[self tableName]]) {
 				BOOL dontPersist = attributes[item] != nil && [attributes[item] containsObject:kDoNotPersistAttributeKey];
 				if (!dontPersist) {
 					newColumnsDict[item] = propName;
 				}
-			}
 		}
 	}
     
