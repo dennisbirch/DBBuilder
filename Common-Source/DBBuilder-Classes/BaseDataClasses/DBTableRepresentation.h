@@ -64,10 +64,12 @@ You can assign both these values, along with the file path to your SQLite file, 
 	DBManager *_manager;
 }
 
+NS_ASSUME_NONNULL_BEGIN
+
 @property (nonatomic, assign, readonly) BOOL isDirty;
 @property (nonatomic, assign, readonly) NSInteger itemID;
-@property (nonatomic, strong) NSDate *creationDate;
-@property (nonatomic, strong) NSDate *modificationDate;
+@property (nullable, nonatomic, strong) NSDate *creationDate;
+@property (nullable, nonatomic, strong) NSDate *modificationDate;
 
 // INITIALIZERS
 
@@ -136,7 +138,7 @@ You can assign both these values, along with the file path to your SQLite file, 
  An instance of a DBManager class, typically the defaultManager.
  @returns An NSArray of objects matching your query.
  */
-+ (NSArray *)objectsWithOptions:(NSDictionary *) options manager:(DBManager *)manager;
++ (nullable NSArray *)objectsWithOptions:(nullable NSDictionary *) options manager:(DBManager *)manager;
 
 /*!
  Convenience method using an FMDatabaseQueue to get an array of objects matching query options you pass in.
@@ -146,7 +148,7 @@ You can assign both these values, along with the file path to your SQLite file, 
 		An instance of a DBManager class, typically the defaultManager.
  @param completionBlock A block object to execute completion behavior on the resultsArray.
  */
-+ (void)queueObjectsWithOptions:(NSDictionary *)options manager:(DBManager *)manager completionBlock:(void(^)(NSArray *resultsArray, NSError *error))completion;
++ (void)queueObjectsWithOptions:(nullable NSDictionary *)options manager:(DBManager *)manager completionBlock:(void(^)(NSArray *resultsArray, NSError *error))completion;
 
 /*!
  Convenience method that returns the "id" column value for all records in a table
@@ -166,13 +168,19 @@ You can assign both these values, along with the file path to your SQLite file, 
 - (BOOL)saveToDB;
 
 /*!
+ Stub method to allow custom post-save actions in subclasses.
+ Override this method in subclasses to perform any desired action after the save action has completed.
+ */
+- (void)postSaveAction;
+
+/*!
  Saves a DBTableRepresentation instance to the database on a serial queue.
  @params 
 	Completion block with: 
 		success - A boolean indicating successful completion
 		error - An NSError passed from the FMDatabase instance
  */
-- (void)queueSaveToDBWithCompletionBlock:(void(^)(BOOL success, NSError *error))completion;
+- (void)queueSaveToDBWithCompletionBlock:(nullable void(^)(BOOL success, NSError *error))completion;
 
 
 // DELETING OBJECTS
@@ -181,7 +189,7 @@ You can assign both these values, along with the file path to your SQLite file, 
  @param obj The object that should be deleted.
  @returns A boolean indicating success. If the object has related entries, it will indicate failure in cases where any of them could not be deleted.
  */
-+ (BOOL)deleteObject:(DBTableRepresentation *)obj;
++ (BOOL)deleteObject:(nullable DBTableRepresentation *)obj;
 
 
 /*!
@@ -224,7 +232,7 @@ You can assign both these values, along with the file path to your SQLite file, 
     the kJoinTableMappingAttributeKey constant with the name of the Person class, separated by a colon (":") 
     -- @"people" : [kJoinTable stringByAppendingString:@":DBPerson"]
 
- Implement this method by returning a dictionary with column names for keys and either strings, or arrays of strings for column attributes as values
+ Implement this method by returning a dictionary with column names for keys and either strings or arrays of strings for column attributes as values
  
  Do not include attributes for the required properties handled in this superclass: (id, creationDate, modificationDate) in the dictionary
  
@@ -263,6 +271,11 @@ You can assign both these values, along with the file path to your SQLite file, 
 - (void)makeClean;
 
 /*!
+ A convenience method to create a join-array definition when overriding the -tableAttributes method
+ */
+- (NSArray *)arrayAttributeDefinitionForClass:(NSString *)className shouldCascadeDelete:(BOOL)shouldCascadeDelete;
+
+/*!
  Access to the various meta data dictionaries that describe properties, attributes, database table columns, etc.
 */
 - (NSDictionary *)propertiesCache;
@@ -272,5 +285,6 @@ You can assign both these values, along with the file path to your SQLite file, 
 - (void)buildTableDict;
 - (BOOL)isDBTableRepresentationClass;
 
+NS_ASSUME_NONNULL_END
 
 @end

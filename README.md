@@ -9,12 +9,14 @@ It creates queries and execution statements to perform CRUD operations on your d
 
 It allows the developer to work more directly with instances of classes, rather than writing database code, but does allow accessing data directly with queries and execution statements where necessary.
 
+DBBuilder is a set of Objective-C classes, but can be used in Swift projects. See the section on __Working in Swift Projects__ for more information.
+
 ## Requirements 
 DBBuilder works with [Flying Meat's FMDB](http://github.com/ccgus/fmdb). You may want to download the latest version from the author's GitHub page.
 
 Any projects you build with DBBuilder will of course require linking in the *libsqlite3.dylib* library.
 
-DBBuilder uses ARC (Automatic Reference Counting), so you'll need to use a version of Xcode that supports it. The project was originally begun with Xcode 4.x, but has only been extensively tested in Xcode versions 5.1.1 and 6.x+.
+DBBuilder uses ARC (Automatic Reference Counting), so you'll need to use a version of Xcode that supports it. The project was originally begun with Xcode 4.x, but has only been extensively tested in Xcode versions 5.1.1 and 6.x+. The newly added Swift demo project is written in Swift 2.0, which requires Xcode 7.0 or higher.
 
 ## Usage
 There are two main classes in DBBuilder:
@@ -108,6 +110,12 @@ As mentioned above, DBBuilder builds and maintains database tables from the DBTa
 
 * `+ (NSString *)overriddenTableName` - Lets you specify a name for a table other than the one DBBuilder would automatically create.
 *  `+ (NSDictionary *)overriddenColumnNames` - Lets you specify names for table columns used for DBTableRepresentation subclass properties. You can use this method to adapt to existing table columns that store a foreign key ID to another object's table. DBBuilder automatically creates column names for such properties formatted as <property-name>_id. If that won't work with an existing database table you need to access, return an NSDictionary with the property name as key and the column name to use as the value. Be sure to match capitalization as case-sensitive comparisons are used.
+
+##Working in Swift Projects
+
+DBBuilder can be included in Swift projects, and has been updated to include nullability decoration in its DBTableRepresentation class to assist in using it with Swift. There is one major caveat for working in Swift projects: Your DBTableRepresentation subclasses must be written in Objective-C. This is required because of the introspection performed on properties, which makes up a great deal of the library's functionality.
+
+Everything else in your project can be written in Swift, including extensions of your DBTableRepresentation subclasses (see the demo project, __DBBuilder-Swift__, for an example of this). 
 
 ##Demo Projects
 The DBBuilder archive includes both iOS and Mac demo projects. They exercise a range of functionality. They demonstrate implementing a simple database application, and includes a number of unit tests that may help guide you in using DBBuilder in your own projects. They are not meant to be examples of good UI.

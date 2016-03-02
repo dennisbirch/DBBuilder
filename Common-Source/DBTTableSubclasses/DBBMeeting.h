@@ -27,18 +27,22 @@
 @class DBBProject;
 @class DBBPerson;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface DBBMeeting : DBTableRepresentation
 
-@property (nonatomic, weak) DBBProject *project;
-@property (nonatomic, strong) NSArray *participants;
-@property (nonatomic, copy) NSString *purpose;
-@property (nonatomic, strong) NSDate *startTimeActual;
-@property (nonatomic, strong) NSDate *finishTimeActual;
+@property (nullable, nonatomic, weak) DBBProject *project;
+@property (nullable, nonatomic, strong) NSArray *participants;
+@property (nullable, nonatomic, copy) NSString *purpose;
+@property (nullable, nonatomic, strong) NSDate *startTimeActual;
+@property (nullable, nonatomic, strong) NSDate *finishTimeActual;
 @property (nonatomic, assign) double scheduledHours;
 
 + (NSArray *)allMeetings;
 
 - (void)removeParticipant:(DBBPerson *)person;
 - (void)addParticipant:(DBBPerson *)person;
+
+NS_ASSUME_NONNULL_END
 
 @end

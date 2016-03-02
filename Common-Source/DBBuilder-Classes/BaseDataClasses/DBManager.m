@@ -178,11 +178,15 @@ static DBManager *sharedManager = nil;
 		return;
 	}
 	
-	NSString *tableName = NSStringFromClass(class);
-	NSMutableDictionary *meta = [[self metaDataForTable:tableName] mutableCopy];
+    NSString *className = NSStringFromClass(class);
+    NSRange swiftRange = [className rangeOfString:@"_Swift."];
+    if (swiftRange.length > 0) {
+        className = [className substringFromIndex:swiftRange.length + swiftRange.location];
+    }
+	NSMutableDictionary *meta = [[self metaDataForTable:className] mutableCopy];
 	meta[kClassPropertiesDictKey] = propertiesDict;
 	NSMutableDictionary *allData = [self.allTablesPropertiesCache mutableCopy];
-	allData[tableName] = [meta copy];
+	allData[className] = [meta copy];
 	self.allTablesPropertiesCache = [allData copy];
 }
 
@@ -192,8 +196,8 @@ static DBManager *sharedManager = nil;
 		return;
 	}
 	
-	NSString *tableName = NSStringFromClass(class);
-	NSMutableDictionary *meta = [[self metaDataForTable:tableName] mutableCopy];
+	NSString *className = NSStringFromClass(class);
+	NSMutableDictionary *meta = [[self metaDataForTable:className] mutableCopy];
 	meta[kTablePropertyToColumnMap] = mapDict;
     
     // make an inverse map
@@ -205,10 +209,9 @@ static DBManager *sharedManager = nil;
     meta[kTableColumnToPropertyMap] = columnToPropertyMap;
     
 	NSMutableDictionary *allData = [self.allTablesPropertiesCache mutableCopy];
-	allData[tableName] = [meta copy];
+	allData[className] = [meta copy];
 	self.allTablesPropertiesCache = [allData copy];
 }
-
 
 - (void)setAttributes:(NSDictionary *)attributesDict forClass:(Class)class
 {
@@ -216,11 +219,11 @@ static DBManager *sharedManager = nil;
 		return;
 	}
 	
-	NSString *tableName = NSStringFromClass(class);
-	NSMutableDictionary *meta = [[self metaDataForTable:tableName] mutableCopy];
+	NSString *className = NSStringFromClass(class);
+	NSMutableDictionary *meta = [[self metaDataForTable:className] mutableCopy];
 	meta[kClassAttributesKey] = attributesDict;
 	NSMutableDictionary *allData = [self.allTablesPropertiesCache mutableCopy];
-	allData[tableName] = [meta copy];
+	allData[className] = [meta copy];
 	self.allTablesPropertiesCache = [allData copy];
 }
 
@@ -230,11 +233,11 @@ static DBManager *sharedManager = nil;
 		return;
 	}
 
-	NSString *tableName = NSStringFromClass(class);
-	NSMutableDictionary *meta = [[self metaDataForTable:tableName] mutableCopy];
+	NSString *className = NSStringFromClass(class);
+	NSMutableDictionary *meta = [[self metaDataForTable:className] mutableCopy];
 	meta[kColumnRemapDictKey] = remappingDict;
 	NSMutableDictionary *allData = [self.allTablesPropertiesCache mutableCopy];
-	allData[tableName] = [meta copy];
+	allData[className] = [meta copy];
 	self.allTablesPropertiesCache = [allData copy];
 }
 
@@ -270,7 +273,6 @@ static DBManager *sharedManager = nil;
 {
     return self.joinTableMap[joinTableName] != nil;
 }
-
 
 - (NSDictionary *)joinMapForTableName:(NSString *)joinTableName
 {

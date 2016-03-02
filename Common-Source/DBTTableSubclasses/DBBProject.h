@@ -29,20 +29,24 @@
 
 @interface DBBProject : DBTableRepresentation
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *code;
-@property (nonatomic, strong) NSDate *startDate;
-@property (nonatomic, strong) NSDate *endDate;
-@property (nonatomic, strong) NSDecimalNumber *budget;
+NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, strong) NSArray *meetings;
-@property (nonatomic, strong) NSArray *tags;
+@property (nullable, nonatomic, copy) NSString *name;
+@property (nullable, nonatomic, copy) NSString *code;
+@property (nullable, nonatomic, strong) NSDate *startDate;
+@property (nullable, nonatomic, strong) NSDate *endDate;
+@property (nullable, nonatomic, strong) NSDecimalNumber *budget;
 
-@property (nonatomic, strong) DBBProject *subProject;
+@property (nullable, nonatomic, strong) NSArray *meetings;
+@property (nullable, nonatomic, strong) NSArray *tags;
 
-@property (nonatomic, strong) DBBPerson *projectLead;
+@property (nullable, nonatomic, strong) DBBProject *subProject;
+
+@property (nullable, nonatomic, strong) DBBPerson *projectLead;
 
 - (void)addMeeting:(DBBMeeting *)meeting;
 - (void)removeMeeting:(DBBMeeting *)meeting;
+
+NS_ASSUME_NONNULL_END
 
 @end

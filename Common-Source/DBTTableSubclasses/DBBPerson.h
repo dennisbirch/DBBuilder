@@ -24,16 +24,22 @@
 //  THE SOFTWARE.
 
 #import "DBTableRepresentation.h"
+#if TARGET_OS_IPHONE
+@import UIKit;
+#endif
 
 @interface DBBPerson : DBTableRepresentation
 
-@property (nonatomic, copy) NSString *firstName;
-@property (nonatomic, copy) NSString *lastName;
-@property (nonatomic, copy) NSString *middleInitial;
-@property (nonatomic, copy) NSString *department;
-@property (nonatomic, strong) NSData *imageData;
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSArray *)allPeople;
+@property (nullable, nonatomic, copy) NSString *firstName;
+@property (nullable, nonatomic, copy) NSString *lastName;
+@property (nullable, nonatomic, copy) NSString *middleInitial;
+@property (nullable, nonatomic, copy) NSString *department;
+@property (nullable, nonatomic, strong) NSData *imageData;
+@property (nonatomic, assign) NSUInteger age;
+
++ (nullable NSArray *)allPeople;
 
 - (NSString *)fullName;
 - (NSString *)fullNameAndDepartment;
@@ -44,5 +50,7 @@
 - (void)setJPEGImage:(UIImage *)image withCompression:(CGFloat)compression;
 - (void)setPNGImage:(UIImage *)image;
 #endif
+
+NS_ASSUME_NONNULL_END
 
 @end

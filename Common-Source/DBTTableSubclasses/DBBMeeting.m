@@ -66,5 +66,4 @@
 	self.participants = [participants copy];
 }
 
-
 @end

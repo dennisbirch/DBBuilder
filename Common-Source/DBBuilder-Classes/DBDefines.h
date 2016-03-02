@@ -1,30 +1,30 @@
 
 
 // DATABASE COLUMN ATTRIBUTES
-#define kDoNotPersistAttributeKey               @"DONOTPERSIST"
-#define kNotNullAttributeKey                    @"NOT NULL"
-#define kUniqueAttributeKey                     @"UNIQUE"
-#define kJoinTableMappingAttributeKey           @"JoinTableMapping"
-#define kCascadingArrayDeletionAttributeKey		@"CascadingArrayDeletion"
-
+static NSString * const kDoNotPersistAttributeKey =           @"DONOTPERSIST";
+static NSString * const kNotNullAttributeKey =                @"NOT NULL";
+static NSString * const kUniqueAttributeKey =                 @"UNIQUE";
+static NSString * const kJoinTableMappingAttributeKey =       @"JoinTableMapping";
+static NSString * const kCascadingArrayDeletionAttributeKey = @"CascadingArrayDeletion";
+static NSString * const kAttributeSeparatorKey =              @":";
 // QUERY OPTIONS DICTIONARY KEYS
-#define kQueryColumnsKey						@"ColumnsForQuery"
-#define kQueryConditionsKey						@"ConditionsForQuery"
-#define kQuerySortingKey						@"SortingForQuery"
-#define kQueryGroupingKey           			@"GroupingForQuery"
-#define kQueryDistinctKey						@"DistinctQuery"
+static NSString * const kQueryColumnsKey =                    @"ColumnsForQuery";
+static NSString * const kQueryConditionsKey =                 @"ConditionsForQuery";
+static NSString * const kQuerySortingKey =                    @"SortingForQuery";
+static NSString * const kQueryGroupingKey =                   @"GroupingForQuery";
+static NSString * const kQueryDistinctKey =                   @"DistinctQuery";
 
 // INTERNAL DEFINITIONS
-#define kClassPropertiesDictKey     			@"ClassPropertiesDict"
-#define kClassAttributesKey         			@"ClassAttributes"
-#define kColumnRemapDictKey						@"ColumnRemapKey"
-#define kTablePropertyToColumnMap				@"TableColumnPropertyMap"
-#define kTableColumnToPropertyMap				@"TableColumnToPropertyMap"
+static NSString * const kClassPropertiesDictKey =             @"ClassPropertiesDict";
+static NSString * const kClassAttributesKey =                 @"ClassAttributes";
+static NSString * const kColumnRemapDictKey =                 @"ColumnRemapKey";
+static NSString * const kTablePropertyToColumnMap =           @"TableColumnPropertyMap";
+static NSString * const kTableColumnToPropertyMap =           @"TableColumnToPropertyMap";
 
-#define kJoinIDKey								@"JoinID"
-#define kTableIDKey         			        @"TableID"
-#define kJoinClassKey							@"JoinClass"
-#define kClassKey               			    @"Class"
-#define kPropertyNameKey			            @"PropertyName"
-#define kTableNameKey               			@"TableName"
+static NSString * const kJoinIDKey =                          @"JoinID";
+static NSString * const kTableIDKey =                         @"TableID";
+static NSString * const kJoinClassKey =                       @"JoinClass";
+static NSString * const kClassKey =                           @"Class";
+static NSString * const kPropertyNameKey =                    @"PropertyName";
+static NSString * const kTableNameKey =                       @"TableName";
 

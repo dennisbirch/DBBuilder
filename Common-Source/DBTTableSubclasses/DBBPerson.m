@@ -7,7 +7,9 @@
 //
 
 #import "DBBPerson.h"
-//#import "DBManager.h"
+#if TARGET_OS_IPHONE
+@import UIKit;
+#endif
 
 @implementation DBBPerson
 

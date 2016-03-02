@@ -20,6 +20,8 @@
 		951FD2F71A10E7E00028DFFD /* DBBEditProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FD2F61A10E7E00028DFFD /* DBBEditProjectViewController.m */; };
 		951FD2FA1A11496D0028DFFD /* DBBDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 951FD2F91A11496D0028DFFD /* DBBDatePickerView.m */; };
 		95801D5D18148BD900CD0FBD /* DBBEditMeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95801D5C18148BD900CD0FBD /* DBBEditMeetingViewController.m */; };
+		959F56A41C877833006099BB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 959F56A31C877833006099BB /* Launch Screen.storyboard */; };
+		959F56A61C877947006099BB /* Warnings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 959F56A51C877947006099BB /* Warnings.xcconfig */; };
 		95D9318717EF85970023C2EF /* DBBMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D9318417EF85970023C2EF /* DBBMeeting.m */; };
 		95D9318917EF85970023C2EF /* DBBProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 95D9318617EF85970023C2EF /* DBBProject.m */; };
 		95DC67F517E16F27007C5E99 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DC67F417E16F27007C5E99 /* Foundation.framework */; };
@@ -60,7 +62,6 @@
 		9500696D180E139000C4BCB2 /* ObjCClassUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCClassUtil.h; sourceTree = "<group>"; };
 		9500696E180E139000C4BCB2 /* ObjCClassUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCClassUtil.m; sourceTree = "<group>"; };
 		9500696F180E139000C4BCB2 /* DBMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBMacros.h; sourceTree = "<group>"; };
-		950496171A2E37DC0035F2C3 /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Warnings.xcconfig; path = "../Common-Source/Warnings.xcconfig"; sourceTree = "<group>"; };
 		9504C4C71B1B721600227966 /* NSDateFormatter+DBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+DBExtensions.h"; sourceTree = "<group>"; };
 		9504C4C81B1B721600227966 /* NSDateFormatter+DBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DBExtensions.m"; sourceTree = "<group>"; };
 		951FD2F21A10E28D0028DFFD /* DBBProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBBProjectListViewController.h; path = ViewControllers/DBBProjectListViewController.h; sourceTree = "<group>"; };
@@ -71,6 +72,8 @@
 		951FD2F91A11496D0028DFFD /* DBBDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBBDatePickerView.m; path = Views/DBBDatePickerView.m; sourceTree = "<group>"; };
 		95801D5B18148BD900CD0FBD /* DBBEditMeetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBBEditMeetingViewController.h; path = ViewControllers/DBBEditMeetingViewController.h; sourceTree = "<group>"; };
 		95801D5C18148BD900CD0FBD /* DBBEditMeetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBBEditMeetingViewController.m; path = ViewControllers/DBBEditMeetingViewController.m; sourceTree = "<group>"; };
+		959F56A31C877833006099BB /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		959F56A51C877947006099BB /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Warnings.xcconfig; path = "../Common-Source/Warnings.xcconfig"; sourceTree = "<group>"; };
 		95D9318317EF85970023C2EF /* DBBMeeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBMeeting.h; sourceTree = "<group>"; };
 		95D9318417EF85970023C2EF /* DBBMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBBMeeting.m; sourceTree = "<group>"; };
 		95D9318517EF85970023C2EF /* DBBProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBProject.h; sourceTree = "<group>"; };
@@ -198,6 +201,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		959F56A21C8777EB006099BB /* Common Source */ = {
+			isa = PBXGroup;
+			children = (
+				9500695B180E138F00C4BCB2 /* DBClasses */,
+				A506AE461A129937002E7186 /* fmdb */,
+				95D9318217EF85970023C2EF /* DBBTableSubclasses */,
+			);
+			name = "Common Source";
+			sourceTree = "<group>";
+		};
 		95D9318217EF85970023C2EF /* DBBTableSubclasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +228,7 @@
 		95DC67E817E16F27007C5E99 = {
 			isa = PBXGroup;
 			children = (
-				950496171A2E37DC0035F2C3 /* Warnings.xcconfig */,
+				959F56A51C877947006099BB /* Warnings.xcconfig */,
 				95DC67FA17E16F27007C5E99 /* DBBuilder-Demo-iOS */,
 				95DC67F317E16F27007C5E99 /* Frameworks */,
 				95DC67F217E16F27007C5E99 /* Products */,
@@ -245,16 +258,15 @@
 		95DC67FA17E16F27007C5E99 /* DBBuilder-Demo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				9500695B180E138F00C4BCB2 /* DBClasses */,
-				A506AE461A129937002E7186 /* fmdb */,
-				95D9318217EF85970023C2EF /* DBBTableSubclasses */,
+				95DC680617E16F27007C5E99 /* Main_iPhone.storyboard */,
+				959F56A21C8777EB006099BB /* Common Source */,
 				95DC680317E16F27007C5E99 /* AppDelegate.h */,
 				95DC680417E16F27007C5E99 /* AppDelegate.m */,
-				95DC680617E16F27007C5E99 /* Main_iPhone.storyboard */,
 				95801D6218148D4300CD0FBD /* Views */,
 				95801D5E18148BE500CD0FBD /* ViewControllers */,
 				95DC680F17E16F27007C5E99 /* Images.xcassets */,
 				95DC67FB17E16F27007C5E99 /* Supporting Files */,
+				959F56A31C877833006099BB /* Launch Screen.storyboard */,
 			);
 			name = "DBBuilder-Demo-iOS";
 			path = DBBuilder;
@@ -317,7 +329,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DBB;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Dennis Birch";
 			};
 			buildConfigurationList = 95DC67EC17E16F27007C5E99 /* Build configuration list for PBXProject "DBBuilder-Demo-iOS" */;
@@ -344,7 +356,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				95DC681017E16F27007C5E99 /* Images.xcassets in Resources */,
+				959F56A61C877947006099BB /* Warnings.xcconfig in Resources */,
 				95DC680817E16F27007C5E99 /* Main_iPhone.storyboard in Resources */,
+				959F56A41C877833006099BB /* Launch Screen.storyboard in Resources */,
 				95DC67FF17E16F27007C5E99 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +423,7 @@
 /* Begin XCBuildConfiguration section */
 		958D1AF417EC833500667909 /* Test */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 950496171A2E37DC0035F2C3 /* Warnings.xcconfig */;
+			baseConfigurationReference = 959F56A51C877947006099BB /* Warnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -450,13 +464,14 @@
 		};
 		958D1AF517EC833500667909 /* Test */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 959F56A51C877947006099BB /* Warnings.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DBBuilder/DBBuilder-Demo-iOS-Prefix.pch";
 				INFOPLIST_FILE = "DBBuilder/DBBuilder-Demo-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dennisbirch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "DBBuilder-Demo-iOS Demo";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -465,7 +480,7 @@
 		};
 		95DC682417E16F27007C5E99 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 950496171A2E37DC0035F2C3 /* Warnings.xcconfig */;
+			baseConfigurationReference = 959F56A51C877947006099BB /* Warnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -482,6 +497,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -540,13 +556,14 @@
 		};
 		95DC682717E16F27007C5E99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 959F56A51C877947006099BB /* Warnings.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DBBuilder/DBBuilder-Demo-iOS-Prefix.pch";
 				INFOPLIST_FILE = "DBBuilder/DBBuilder-Demo-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dennisbirch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "DBBuilder-Demo-iOS Demo";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -557,11 +574,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DBBuilder/DBBuilder-Demo-iOS-Prefix.pch";
 				INFOPLIST_FILE = "DBBuilder/DBBuilder-Demo-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dennisbirch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "DBBuilder-Demo-iOS Demo";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

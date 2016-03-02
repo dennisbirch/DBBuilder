@@ -146,9 +146,9 @@ NSString *kIDSuffix = @"_id";
 + (NSArray *)objectsWithOptions:(NSDictionary *) options manager:(DBManager *)manager
 {
     NSString *sql = [self sqlStringWithOptions:options manager:manager];
-    
-    FMResultSet *result = [manager.database executeQuery:sql];
-    
+	
+	FMResultSet *result = [manager.database executeQuery:sql];
+	
 	NSError *dbError = manager.database.lastError;
 	if (manager.database.lastErrorCode  != 0) {
         NSLog(@"Error accessing records in %s: %@\nQuery: %@", __PRETTY_FUNCTION__, [dbError localizedDescription], sql);
@@ -202,7 +202,11 @@ NSString *kIDSuffix = @"_id";
 
 + (BOOL)deleteObject:(DBTableRepresentation *)obj
 {
-    NSInteger itemID = obj.itemID;
+	if (obj == nil) {
+		return YES;
+	}
+
+	NSInteger itemID = obj.itemID;
     DBManager *manager = obj->_manager;
     NSString *sql;
     NSString *tableName = [obj tableName];
@@ -293,6 +297,11 @@ NSString *kIDSuffix = @"_id";
 
 #pragma mark - Saving
 
+- (void)postSaveAction
+{
+	// let subclasses override if desired
+}
+
 - (BOOL)saveToDB
 {
 	BOOL success = NO;
@@ -309,6 +318,8 @@ NSString *kIDSuffix = @"_id";
 	if (success) {
 		_isDirty = NO;
 	}
+	
+	[self postSaveAction];
 	
 	return success;
 }
@@ -368,6 +379,13 @@ NSString *kIDSuffix = @"_id";
     return otherTable.itemID == self.itemID;
 }
 
+// override this method in subclasses if you want to change the name of a class in the database table
+- (NSString *)tableName
+{
+	NSString *className = NSStringFromClass([self class]);
+	NSString *tableName = [className substringFromIndex:_manager.classPrefix.length];
+	return [tableName lowercaseString];
+}
 
 #pragma mark - Mark Dirty Flag
 
@@ -382,27 +400,31 @@ NSString *kIDSuffix = @"_id";
 }
 
 
-/**********************************************
- 
- METHODS BELOW THIS POINT ARE USED BY DBBUILDER CLASSES, AND SHOULD NOT BE USED FOR OTHER PURPOSES
- 
-***********************************************/
-
-#pragma mark - INTERNAL METHODS
-
 #pragma mark Utilities
 
-- (NSString *)tableName
+- (NSArray *)arrayAttributeDefinitionForClass:(NSString *)className shouldCascadeDelete:(BOOL)shouldCascadeDelete
 {
-    NSString *className = NSStringFromClass([self class]);
-    NSString *tableName = [className substringFromIndex:_manager.classPrefix.length];
-    return [tableName lowercaseString];
+    NSString *separatorAndClassName = [NSString stringWithFormat:@"%@%@", kAttributeSeparatorKey, className];
+    NSMutableArray *outArray = [@[[kJoinTableMappingAttributeKey stringByAppendingString:separatorAndClassName]] mutableCopy];
+    if (shouldCascadeDelete) {
+        [outArray addObject:kCascadingArrayDeletionAttributeKey];
+    }
+    
+    return [outArray copy];
 }
 
 - (BOOL)isDBTableRepresentationClass
 {
     return YES;
 }
+
+/**********************************************
+ 
+ METHODS BELOW THIS POINT ARE USED BY DBBUILDER CLASSES, AND SHOULD NOT BE CALLED FROM USER CODE
+ 
+***********************************************/
+
+#pragma mark - INTERNAL METHODS
 
 #pragma mark - Query Support
 
@@ -665,7 +687,7 @@ NSString *kIDSuffix = @"_id";
                 }
                 
                 // if we're trying to add the same item as a subitem, short-circuit it here to avoid a stack overflow
-                if ([NSStringFromClass([self class]) isEqualToString:typeKey]
+                if ([NSStringFromClass([self class]) isEqualToString:typeKey] // TODO: double-check that this works without further mangling
                     && (unsigned)[resultsDict[columnName] integerValue] == instanceID) {
                     [tableInstance setValue:tableInstance forKey:columnName];
                     continue;
@@ -1285,7 +1307,7 @@ NSString *kIDSuffix = @"_id";
 	NSArray *mapArray = attributesDict[propertyName];
 	for (NSString *mapCheck in mapArray) {
 		if (mapCheck != nil && [[mapCheck substringToIndex:kJoinTableMappingAttributeKey.length] isEqualToString:kJoinTableMappingAttributeKey]) {
-			NSUInteger location = [mapCheck rangeOfString:@":"].location;
+			NSUInteger location = [mapCheck rangeOfString:kAttributeSeparatorKey].location;
 			if (mapCheck.length > location) {
 				mapTable = [mapCheck substringFromIndex:location + 1];
 				break;
@@ -1344,6 +1366,7 @@ NSString *kIDSuffix = @"_id";
 
 - (void)cacheDBProperties
 {
+    NSAssert(![NSStringFromClass([self class]) containsString:@"."], @"It looks you've subclassed DBTableRepresentation with a Swift class, which is not allowed");
 	NSAssert(_manager.filePath != nil, @"The DBManager instance file path has not been set.");
     NSAssert(_manager.classPrefix.length > 0, @"The classPrefix property has not been defined");
 #if DEBUG
