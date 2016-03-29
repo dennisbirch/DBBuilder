@@ -48,7 +48,9 @@
 
 @interface DBManager : NSObject
 
-@property (nonatomic, strong) FMDatabase *database;
+NS_ASSUME_NONNULL_BEGIN
+
+@property (nullable, nonatomic, strong) FMDatabase *database;
 @property (nonatomic, strong, readonly) NSDictionary *allTablesPropertiesCache;
 @property (nonatomic, copy) NSString *filePath;
 @property (nonatomic, copy) NSString *classPrefix;
@@ -120,5 +122,7 @@
 - (NSArray *)joinMapsForClassName:(NSString *)className;
 - (void)setClassIsPrepared:(Class)class;
 - (BOOL)classIsPrepared:(Class)class;
+
+NS_ASSUME_NONNULL_END
 
 @end
