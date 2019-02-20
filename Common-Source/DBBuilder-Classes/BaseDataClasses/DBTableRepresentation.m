@@ -128,7 +128,7 @@ NSString *kIDSuffix = @"_id";
 	return self;
 }
 
-+ (instancetype)savedInstanceWithValues:(NSDictionary *)values manager:(DBManager *)manager
++ (instancetype __nullable)savedInstanceWithValues:(NSDictionary *)values manager:(DBManager *)manager
 {
 	DBTableRepresentation *instance = [[self alloc]initWithDictionary:values manager:manager];
 	
@@ -186,7 +186,7 @@ NSString *kIDSuffix = @"_id";
 	FMResultSet *results = [manager.database executeQuery:sql];
 	if (manager.database.lastErrorCode > 0) {
 		NSLog(@"Error executing SQL for IDs array: %@", manager.database.lastErrorMessage);
-		return nil;
+		return @[];
 	}
 	
 	NSMutableArray *idsArray = [NSMutableArray new];
@@ -352,7 +352,7 @@ NSString *kIDSuffix = @"_id";
 // if it is not the corresponding subclass's name without the class prefix
 + (NSString *)overriddenTableName
 {
-    return nil;
+    return @"";
 }
 
 // Override this method in subclasses where you want to ensure specific behaviors

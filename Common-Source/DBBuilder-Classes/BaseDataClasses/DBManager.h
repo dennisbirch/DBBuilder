@@ -65,46 +65,46 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (DBManager *)defaultDBManager;
 
-/*!
-	Method to access a secondary DBManager instance.
-	@params	dbFilePath: A file path for the SQLite file the DBManager instance will manage.
-	@returns The requested DBManager instance.
- */
-+ (DBManager *)managerWithFilePath:(NSString *)dbFilePath;
+    /**
+     Method to access a secondary DBManager instance.
 
+     @param dbFilePath A file path for the SQLite file the DBManager instance will manage.
+     @return The requested DBManager instance.
+     */
++ (DBManager * __nullable)managerWithFilePath:(NSString *)dbFilePath;
 
-/*!
-	Method to set properties that are required for proper configuration of your DBManager instance.
-	@params	
-        filePath: A file path for the SQLite file the DBManager instance will manage. Pass in nil if you want to use an in-memory database.
-        classPrefix: The prefix your DBTableRepresentation subclasses are named with. This must be at least one character long.
-        idColumnName: The name used in your database tables for a unique ID primary key column.
-	@returns The requested DBManager instance.
+/**
+ Method to set properties that are required for proper configuration of your DBManager instance.
+
+ @param filePath A file path for the SQLite file the DBManager instance will manage. Pass in nil if you want to use an in-memory database.
+ @param classPrefix The prefix your DBTableRepresentation subclasses are named with. This must be at least one character long.
+ @param idColumnName The name used in your database tables for a unique ID primary key column.
  */
 - (void)configureWithFilePath:(NSString *)filePath classPrefix:(NSString *)classPrefix idColumnName:(NSString *)idColumnName;
 
-/*!
-	Method to run a database query on a DBManager instance.
-	@params	query: An SQL statement to execute.
-	@returns The results of running the database query.
- */
-- (FMResultSet *)runQuery:(NSString *)query;
+/**
+ Method to run a database query on a DBManager instance.
 
-/*!
-	Method to obtain the number of records in a database table.
-	@params	tableName: The name of the database table whose count you want to obtain.
-	@returns The count of records for that table.
+ @param query An SQL statement to execute.
+ @return The results of running the database query.
+ */
+- (FMResultSet *__nullable)runQuery:(NSString *)query;
+
+/**
+  Method to obtain the number of records in a database table.
+ @param tableName The name of the database table whose count you want to obtain.
+ @return The count of records for that table.
  */
 - (NSUInteger)countForTable:(NSString *)tableName;
 
-/*!
-	Method to obtain a FMResultSet instance representing a database table row's contents.
-	@params	
-        tableName: The name of the database table whose records you want to access.
-        row: The row number whose contents you want to access
-	@returns An FMResultSet instance with the table row's contents, or nil.
+/**
+ Method to obtain a FMResultSet instance representing a database table row's contents.
+
+ @param tableName The name of the database table whose records you want to access.
+ @param row The row number whose contents you want to access
+ @return An FMResultSet instance with the table row's contents, or nil.
  */
-- (FMResultSet *)recordForTable:(NSString *)tableName row:(NSInteger)row;
+- (FMResultSet * __nullable)recordForTable:(NSString *)tableName row:(NSInteger)row;
 
 /*!
 	Method to reset a DBManager's values so that it can be reused for another file.

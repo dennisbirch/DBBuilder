@@ -36,7 +36,9 @@
 
 - (void)tearDown
 {
-    // Put teardown code here; it will be run once, after the last test case.
+    CommonSetup *setup = [[CommonSetup alloc] init];
+    [setup performTeardown];
+    
     [super tearDown];
 }
 

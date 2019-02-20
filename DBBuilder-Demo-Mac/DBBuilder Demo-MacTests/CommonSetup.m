@@ -18,13 +18,17 @@
 
 @implementation CommonSetup
 
+- (NSString *)filePath {
+    NSURL *documentsFolderURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString *path = [documentsFolderURL.path stringByAppendingPathComponent:@"DBBuilder Test.sqlite"];
+    return path;
+}
+
 - (void)performSetUp
 {
-	
-	NSURL *documentsFolderURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-	NSString *path = [documentsFolderURL.path stringByAppendingPathComponent:@"DBBuilder Test.sqlite"];
+    NSString *path = self.filePath;
 
-	self.manager = [DBManager managerWithFilePath:path];
+    self.manager = [DBManager managerWithFilePath:path];
 	
 	[self.manager configureWithFilePath:path classPrefix:@"DBB" idColumnName:@"id"];
 	
@@ -33,18 +37,12 @@
 	NSArray *participants = [DBBPerson allPeople];
 	
 	// test multi-delete
+    // TODO: Move to test case
 	BOOL success = [DBBPerson deleteObjects:participants];
 	XCTAssertTrue(success, @"Deleting all people should return True in %s", __PRETTY_FUNCTION__);
 	
 	NSUInteger count = [self.manager countForTable:@"person"];
 	XCTAssertEqual(count, (unsigned)0, @"The count of people should be 0 in %s", __PRETTY_FUNCTION__);
-	
-	// test deleting with direct execute statement to FMDatabase
-	NSString *sql = @"DELETE FROM meeting";
-	success = [self.manager.database executeStatements:sql];
-	XCTAssertTrue(success, @"Deleting with an execute statement to FMDatabase should return success in %s", __PRETTY_FUNCTION__);
-	count = [self.manager countForTable:@"meeting"];
-	XCTAssertEqual(count, (unsigned)0, @"The count of meetings should be 0 in %s", __PRETTY_FUNCTION__);
 	
 	// test deleting individual objects
 	NSArray *projects = [DBBProject objectsWithOptions:nil manager:self.manager];
@@ -56,5 +54,27 @@
 	XCTAssertEqual(count, (unsigned)0, @"The count of projects should be 0 in %s", __PRETTY_FUNCTION__);
 }
 
+- (void)performTeardown {
+    NSString *path = [self filePath];
+    NSError *error = nil;
+    [NSFileManager.defaultManager removeItemAtPath:path error:&error];
+    if (error != nil) {
+        NSLog(@"Error deleting file: %@", error.localizedDescription);
+    }
+}
+
+- (NSArray <DBBPerson *>*)twoPeople {
+    DBBPerson *p1 = [[DBBPerson alloc] initWithManager:self.manager];
+    p1.firstName = @"Dennis";
+    p1.lastName = @"Birch";
+    p1.department = @"Engineering";
+    
+    DBBPerson *p2 = [[DBBPerson alloc] initWithManager:self.manager];
+    p2.firstName = @"Simon";
+    p2.lastName = @"Sez";
+    p2.department = @"Management";
+
+    return @[p1, p2];
+}
 
 @end

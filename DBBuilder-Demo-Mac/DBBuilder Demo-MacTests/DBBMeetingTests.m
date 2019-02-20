@@ -36,37 +36,35 @@
 
 - (void)tearDown
 {
-    // Put teardown code here; it will be run once, after the last test case.
+    CommonSetup *setup = [[CommonSetup alloc] init];
+    [setup performTeardown];
+    
     [super tearDown];
 }
 
 - (void)testMeeting
 {
+    CommonSetup *setup = [CommonSetup new];
+    NSArray <DBBPerson *>*people = [setup twoPeople];
 	DBBMeeting *mtg = [[DBBMeeting alloc] initWithManager:self.manager];
 	mtg.purpose = @"Choose new hiree";
 	mtg.startTimeActual = [NSDate date];
 	mtg.scheduledHours = .75;
+    
+    XCTAssertEqual(people.count, 2);
 	
-	DBBPerson *p1 = [[DBBPerson alloc] initWithManager:self.manager];
-	p1.firstName = @"Dennis";
-	p1.lastName = @"Birch";
-	p1.department = @"Engineering";
-
-	DBBPerson *p2 = [[DBBPerson alloc] initWithManager:self.manager];
-	p2.firstName = @"Simon";
-	p2.lastName = @"Sez";
-	p2.department = @"Management";
-	BOOL success = [p1 saveToDB];
+    DBBPerson *p1 = people.firstObject;
+    DBBPerson *p2 = people.lastObject;
+    BOOL success = [p1 saveToDB];
 	XCTAssertTrue(success, @"Person 1 should be saved successfully in %s", __PRETTY_FUNCTION__);
-	success = [p2 saveToDB];
+    success = [p2 saveToDB];
 	XCTAssertTrue(success, @"Person 2 should be saved successfully in %s", __PRETTY_FUNCTION__);
 	
-	mtg.participants = @[p1, p2];
+    mtg.participants = people;
 	success = [mtg saveToDB];
-	
-	
 	XCTAssertTrue(success, @"Meeting should be saved successfully in %s", __PRETTY_FUNCTION__);
-	NSInteger mtgID = mtg.itemID;
+
+    NSInteger mtgID = mtg.itemID;
 
 	NSDictionary *options = @{kQueryConditionsKey : [NSString stringWithFormat:@"id = %ld", (long)mtgID]};
     NSArray *result = [DBBMeeting objectsWithOptions:options manager:self.manager];
@@ -86,24 +84,15 @@
 	DBBPerson *deletedPerson = [[DBBPerson alloc] initWithID:itemID manager:self.manager];
 	XCTAssertNil(deletedPerson, @"The person deleted should be nil in %s", __PRETTY_FUNCTION__);
     
-    // test deleting multiple objects
-    p1 = [[DBBPerson alloc] initWithManager:self.manager];
-    p1.firstName = @"Joe";
-    p1.lastName = @"Schmoe";
-    p1.department = @"Support";
+    NSUInteger count = [self.manager countForTable:@"meeting"];
+    XCTAssertEqual(count, (unsigned)1, @"The count of meetings should be 1 in %s", __PRETTY_FUNCTION__);
     
-    p2 = [[DBBPerson alloc] initWithManager:self.manager];
-    p2.firstName = @"Sally";
-    p2.lastName = @"Smith";
-    p2.department = @"Marketing";
-    
-    success = [p1 saveToDB];
-    XCTAssertTrue(success, @"Person 1 should be saved successfully in %s", __PRETTY_FUNCTION__);
-    
-    success = [p2 saveToDB];
-    XCTAssertTrue(success, @"Person 2 should be saved successfully in %s", __PRETTY_FUNCTION__);
-    
-    
+    // test deleting with direct execute statement to FMDatabase
+    NSString *sql = @"DELETE FROM meeting";
+    success = [self.manager.database executeStatements:sql];
+    XCTAssertTrue(success, @"Deleting with an execute statement to FMDatabase should return success in %s", __PRETTY_FUNCTION__);
+    count = [self.manager countForTable:@"meeting"];
+    XCTAssertEqual(count, (unsigned)0, @"The count of meetings should be 0 in %s", __PRETTY_FUNCTION__);
 }
 
 - (void)testMultipleObjectDeletion

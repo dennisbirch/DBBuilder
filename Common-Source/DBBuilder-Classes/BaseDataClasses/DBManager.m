@@ -38,14 +38,16 @@ static DBManager *sharedManager = nil;
 
 #pragma mark - Non-default Manager
 
-+ (DBManager *)managerWithFilePath:(NSString *)dbFilePath
++ (DBManager * __nullable)managerWithFilePath:(NSString *)dbFilePath
 {
 	DBManager *mgr = [[DBManager alloc] init];
 	if (mgr) {
 		mgr.filePath = dbFilePath;
 		[mgr database];
 	}
-	
+    
+    NSLog(@"File path: %@", dbFilePath);
+    
 	return mgr;
 }
 
@@ -54,11 +56,13 @@ static DBManager *sharedManager = nil;
     self.filePath = filePath;
     self.classPrefix = classPrefix;
     self.idColumnName = idColumnName;
+    
+    NSLog(@"File path: %@", filePath);
 }
 
 #pragma mark - Queries
 
-- (FMResultSet *)runQuery:(NSString *)query
+- (FMResultSet *__nullable)runQuery:(NSString *)query
 {
     if (self.database == nil  || [query isEqualToString:@""]) {
         return nil;
@@ -88,7 +92,7 @@ static DBManager *sharedManager = nil;
 }
 
 
-- (FMResultSet *)recordForTable:(NSString *)tableName row:(NSInteger)row
+- (FMResultSet * __nullable)recordForTable:(NSString *)tableName row:(NSInteger)row
 {
     NSString *query = @"SELECT * FROM";
     query = [NSString stringWithFormat:@"%@ %@",query, [tableName db_sqlify]];

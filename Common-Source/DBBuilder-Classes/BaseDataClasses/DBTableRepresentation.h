@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
  An instance of a DBManager class, typically the defaultManager.
  @returns An instance of your DBTableRepresentation subclass set with values that were passed in, which have been saved to the database.
  */
-+ (instancetype)savedInstanceWithValues:(NSDictionary *)values manager:(DBManager *)manager;
++ (instancetype __nullable)savedInstanceWithValues:(NSDictionary *)values manager:(DBManager *)manager;
 
 
 // ACCESSING DATA

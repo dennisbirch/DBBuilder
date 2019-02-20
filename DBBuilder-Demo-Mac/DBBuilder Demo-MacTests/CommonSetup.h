@@ -7,11 +7,15 @@
 //
 
 @class DBManager;
+@class DBBPerson;
 
 @interface CommonSetup : XCTestCase
 
 @property (nonatomic, strong) DBManager *manager;
 
 - (void)performSetUp;
+- (void)performTeardown;
+
+- (NSArray <DBBPerson *>*)twoPeople;
 
 @end
